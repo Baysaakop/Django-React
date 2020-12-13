@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Button, Typography, Spin, Row, Col, Divider } from 'antd';
 import { LoadingOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
@@ -8,18 +8,16 @@ import * as actions from '../store/actions/auth';
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Signup = (props) => {
-    const [form] = Form.useForm();
-    const [errorMessage, setErrorMessage] = useState();
+    const [form] = Form.useForm();    
 
     useEffect(() => {
-        if (props.error) {
-            setErrorMessage(<p style={{ color: 'red' }}>{props.error.message}</p>)
-        }
-    }, [props.error])
+        if (props.token) {
+            props.history.goBack();
+        }  
+    }, [props.token, props.history])
     
     const onFinish = (values) => {        
-        props.onAuth(values.username, values.email, values.password, values.confirm);
-        props.history.goBack();
+        props.onAuth(values.username, values.email, values.password, values.confirm);        
     };
 
     const onFinishFailed = (errorInfo) => {
@@ -27,8 +25,7 @@ const Signup = (props) => {
     };
 
     return (
-        <div>
-            {errorMessage}
+        <div>            
             {props.loading ? (
                 <Spin indicator={loadingIcon} />
             ) : (
@@ -126,8 +123,8 @@ const Signup = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.loading,
-        error: state.error
+        loading: state.loading,        
+        token: state.token
     }
 }
 

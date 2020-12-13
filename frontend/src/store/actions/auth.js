@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 import api from '../../api';
+import { message } from 'antd';
 
 export const authStart = () => {
     return {
@@ -26,7 +27,7 @@ export const authFail = error => {
 export const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('expirationDate');    
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -55,9 +56,18 @@ export const authLogin = (username, password) => {
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSuccess(token, username));
             dispatch(checkAuthTimeout(3600));
+            message.info(`Welcome, ${username}`);
         })
         .catch(err => {
-            dispatch(authFail(err))
+            dispatch(authFail(err));
+            if (err.message.includes("400")) {
+                message.error("Username or password is incorrect!")
+            } else if (err.message.includes("500")) {
+                message.error("Sorry, server error has occured. Please, try again later.")
+            } else {
+                message.error("Error has occured. Try again.")
+                console.log(err)
+            }
         })
     }
 }
@@ -79,9 +89,18 @@ export const authSignup = (username, email, password1, password2) => {
             localStorage.setItem('expirationDate', expirationDate);
             dispatch(authSuccess(token, username));
             dispatch(checkAuthTimeout(3600));
+            message.info(`Welcome, ${username}`);
         })
         .catch(err => {
             dispatch(authFail(err))
+            if (err.message.includes("400")) {
+                message.error("Username or password is incorrect!")
+            } else if (err.message.includes("500")) {
+                message.error("Sorry, server error has occured. Please, try again later.")
+            } else {
+                message.error("Error has occured. Try again.")
+                console.log(err)
+            }
         })
     }
 }

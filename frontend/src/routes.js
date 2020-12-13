@@ -8,6 +8,7 @@ import Signup from './user/Signup';
 import Profile from './user/Profile';
 import ItemCreate from './components/ItemCreate';
 import ItemUpdate from './components/ItemUpdate';
+import ProfileEdit from './user/ProfileEdit';
 
 function BaseRouter () {
     return (
@@ -22,6 +23,7 @@ function BaseRouter () {
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/editprofile" component={ProfileEdit} />
         </Switch>
     )    
 }

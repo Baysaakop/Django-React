@@ -65,8 +65,10 @@ function ItemListView(props) {
                 }
             >
                 <List.Item.Meta                    
-                    title={<a href={`/items/${item.id}`}>{item.name}</a>}
-                    description={<a href={`/updateitem/${item.id}/`} hidden={props.token === null}>Edit</a>}   
+                    title={                        
+                        <a href={`/items/${item.id}`}>{item.name}</a>                                                
+                    }
+                    description={<a href={`/updateitem/${item.id}/`} hidden={props.token === null}>[Edit]</a>}   
                 />
                 {item.description}
             </List.Item>

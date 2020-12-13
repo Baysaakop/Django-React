@@ -1,17 +1,19 @@
-import { Button, Result } from 'antd';
+import { Button, Col, Result, Row, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import api from '../api';
+import Avatar from 'antd/lib/avatar/avatar';
+import { CalendarOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 
 function Profile (props) {
 
     const [user, setUser] = useState();
 
-    useEffect(() => {
-        console.log(props.token)
+    useEffect(() => {        
         axios({
             method: 'GET',
-            url: 'http://127.0.0.1:8000/rest-auth/user/',
+            url: api.profile,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Token ${props.token}`
@@ -27,10 +29,21 @@ function Profile (props) {
     return (
         <div>
             {user ? (
-                <div>
-                    <p>Username: {user.username}</p>
-                    <p>E-mail: {user.email}</p>
-                </div>
+                <Row gutter={[16, 16]} style={{ width: 400 }}>
+                    <Col span={8}>
+                        <Avatar size={96} icon={<UserOutlined />} />
+                    </Col>
+                    <Col span={16} style={{ display: 'flex', alignItems: 'center' }}>
+                        <Typography.Title level={3}>{user.username}</Typography.Title>
+                        <a href="/">[Edit]</a>
+                        {/* <p>E-mail: {user.email}</p> */}
+                    </Col>                    
+                    <Col span={24} style={{ paddingLeft: '16px' }}>
+                        <p ><MailOutlined /> {user.email}</p>                        
+                        <p><PhoneOutlined /> 99113355</p>
+                        <p><CalendarOutlined /> 2000-05-20</p>
+                    </Col>
+                </Row>
             ) : (
                 <Result
                     status="403"

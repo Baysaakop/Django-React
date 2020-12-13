@@ -116,8 +116,7 @@ function ItemUpdate (props) {
         })
     }
 
-    const onImageSelected = (path) => {
-        console.log(path);
+    const onImageSelected = (path) => {        
         setImage(path);
     } 
 
