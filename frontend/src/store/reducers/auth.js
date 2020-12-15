@@ -5,7 +5,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     username: localStorage.getItem('username'),
     error: null,
-    loading: false
+    loading: false    
 }
 
 const authStart = (state, action) => {
@@ -47,7 +47,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_FAIL:
             return authFail(state, action);
         case actionTypes.AUTH_LOGOUT:
-            return authLogout(state, action);
+            return authLogout(state, action);        
         default:
             return state;
     }

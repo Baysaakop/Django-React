@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Button, Divider, Grid, Menu, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Divider, Grid, Menu, Input, Switch } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { BulbOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
+import * as themeActions from '../store/actions/theme';
 import SubMenu from 'antd/lib/menu/SubMenu';
 
 const { useBreakpoint } = Grid;
@@ -13,6 +14,11 @@ function CustomMenu (props) {
     const [current, setCurrent] = useState('home');
     const [collapsed, setCollapsed] = useState(true);  
     const [searchValue, setSearchValue] = useState('');
+    const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        setIsDark(props.isDark)
+    }, [props.isDark])
 
     const handleMenuClick = (e) => {        
         if (e.key === 'search') {
@@ -27,7 +33,7 @@ function CustomMenu (props) {
         setCollapsed(!collapsed);
     }
 
-    const onChange = e => {
+    const onSearchChange = e => {
         setSearchValue(e.target.value);
     }
 
@@ -35,6 +41,11 @@ function CustomMenu (props) {
         var name = e.target.value;
         props.history.push(`/items?search=${name}`)
     }    
+    
+    const onSwitchChange = e => {
+        props.switch(e);
+        setIsDark(!isDark);
+    }
 
     return (
         <div>
@@ -81,7 +92,7 @@ function CustomMenu (props) {
                     </Menu>
                 </div>
             ) : (
-                <Menu id="menu" theme="light" mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]}>
+                <Menu id="menu" theme={isDark ? "dark" : "light"} mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]}>
                     <Menu.Item key="home" icon={<HomeOutlined />}>
                         <Link to="/">Home</Link>
                     </Menu.Item>
@@ -108,17 +119,21 @@ function CustomMenu (props) {
                             <Link to="/login">Sign in</Link>
                         </Menu.Item>
                     ) }    
-                    <Menu.Item key="search" style={{ float: 'right' }}>                        
-                        <Input 
-                            placeholder="Search..."
-                            allowClear
-                            prefix={<SearchOutlined />}
-                            style={{ width: 200 }}
-                            onChange={onChange}
-                            onPressEnter={onSearch}
-                            value={searchValue}
-                        />                           
-                    </Menu.Item>
+                    <Input 
+                        placeholder="Search..."
+                        allowClear
+                        prefix={<SearchOutlined />}
+                        style={{ width: 200 }}
+                        onChange={onSearchChange}
+                        onPressEnter={onSearch}
+                        value={searchValue}                                                
+                    /> 
+                    <Switch 
+                        checkedChildren="Dark" 
+                        unCheckedChildren="Light" 
+                        defaultChecked={isDark}
+                        onChange={onSwitchChange}
+                    />                 
                 </Menu>
             )}                
         </div>
@@ -127,7 +142,8 @@ function CustomMenu (props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () => dispatch(actions.logout())
+        logout: () => dispatch(actions.logout()),        
+        switch: (isDark) => dispatch(themeActions.themeSwitch(isDark))
     }
 }
 

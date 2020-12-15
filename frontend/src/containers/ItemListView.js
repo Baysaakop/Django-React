@@ -46,32 +46,32 @@ function ItemListView(props) {
             </div>
             }
             renderItem={item => (
-            <List.Item
-                key={item.title}
-                actions={[
-                    <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                    <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                    <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                ]}
-                extra={
-                    <Link to={`items/${item.id}`}>
-                        <Image
-                            width={200}
-                            alt="logo"
-                            src={item.image}
-                            fallback="https://thumbs.dreamstime.com/z/no-image-available-icon-photo-camera-flat-vector-illustration-132483296.jpg"
-                        />
-                    </Link>
-                }
-            >
-                <List.Item.Meta                    
-                    title={                        
-                        <a href={`/items/${item.id}`}>{item.name}</a>                                                
+                <List.Item
+                    key={item.title}
+                    actions={[
+                        <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+                        <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+                        <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                    ]}
+                    extra={
+                        <Link to={`items/${item.id}`}>
+                            <Image
+                                width={200}
+                                alt="logo"
+                                src={item.image}
+                                fallback="https://thumbs.dreamstime.com/z/no-image-available-icon-photo-camera-flat-vector-illustration-132483296.jpg"
+                            />
+                        </Link>
                     }
-                    description={<a href={`/updateitem/${item.id}/`} hidden={props.token === null}>[Edit]</a>}   
-                />
-                {item.description}
-            </List.Item>
+                >
+                    <List.Item.Meta                    
+                        title={                        
+                            <a href={`/items/${item.id}`}>{item.name}</a>                                                
+                        }
+                        description={<a href={`/updateitem/${item.id}/`} hidden={props.token === null}>[Edit]</a>}   
+                    />
+                    {item.description}
+                </List.Item>
             )}
         />
     );
@@ -79,7 +79,7 @@ function ItemListView(props) {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.auth.token
     }
 }
 

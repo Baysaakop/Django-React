@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 class App extends Component {
 
-    componentDidMount() {
+    componentDidMount() {                
         this.props.onTryAutoSignup();
     }
 
@@ -27,7 +27,8 @@ class App extends Component {
     
 const mapStateToProps = state => {
     return {        
-        username: state.username
+        username: state.auth.username,
+        isDark: state.theme.isDark === 'true'
     }
 }
   

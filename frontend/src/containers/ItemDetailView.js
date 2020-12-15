@@ -51,7 +51,7 @@ function ItemDetailView(props) {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.auth.token
     }
 }
 

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import api from '../api';
 import ImageUpload from '../components/ImageUpload';
-import Avatar from 'antd/lib/avatar/avatar';
-import { CalendarOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
@@ -201,7 +199,7 @@ function ProfileEdit (props) {
 
 const mapStateToProps = state => {
     return {
-        token: state.token
+        token: state.auth.token
     }
 }
 
