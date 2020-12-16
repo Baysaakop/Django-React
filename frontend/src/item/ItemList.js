@@ -13,7 +13,7 @@ const IconText = ({ icon, text }) => (
     </Space>
 );
 
-function ItemListView(props) {
+function ItemList(props) {
 
     const [items, setItems] = useState();
 
@@ -83,4 +83,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ItemListView);
+export default connect(mapStateToProps)(ItemList);

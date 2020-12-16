@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout } from 'antd';
-import './CustomLayout.css';
-import CustomMenu from '../components/CustomMenu';
+import CustomMenu from './CustomMenu';
+import { connect } from 'react-redux';
 
 const { Header, Content, Footer } = Layout;
 
 function CustomLayout (props) {    
+
+    useEffect(() => {
+        console.log(props)   
+        if (props.isDark) {                     
+            require('./CustomLayoutDark.css')
+        } else {
+            require('./CustomLayoutLight.css')
+        }
+    }, [props.isDark]);
 
     return(
         <Layout className="layout">
@@ -22,4 +31,10 @@ function CustomLayout (props) {
     );  
 };
 
-export default CustomLayout;
+const mapStateToProps = state => {
+    return {                
+        isDark: state.theme.isDark === 'true'
+    }
+}
+
+export default connect(mapStateToProps)(CustomLayout);

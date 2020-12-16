@@ -4,7 +4,7 @@ import { Image, Spin } from 'antd';
 import { connect } from 'react-redux';
 import api from '../api';
 
-function ItemDetailView(props) {
+function ItemDetail(props) {
 
     const [item, setItem] = useState();
 
@@ -55,4 +55,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ItemDetailView);
+export default connect(mapStateToProps)(ItemDetail);

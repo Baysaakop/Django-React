@@ -1,0 +1,31 @@
+/* .layout {
+    background: rgb(255, 255, 255);
+} */
+
+#header {    
+    display: inline-block;
+    z-index: 99;
+    position: relative;        
+    padding: 0 5%;
+    background: #001529;
+}
+
+#content {
+    padding: 5%;
+    z-index: 1;
+    min-height: 80%;
+}
+
+.content-item {
+    background: white;
+    padding: 16px;
+}
+
+.logo {
+    font-family: 'Nerko One', cursive;
+    font-size: 32px;
+    float: left; 
+    margin-right: 16px;       
+    height: 30px;        
+    color: white;
+}

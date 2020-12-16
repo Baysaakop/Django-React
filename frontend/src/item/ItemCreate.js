@@ -3,7 +3,7 @@ import { Form, Input, Button, Typography, message, Result } from 'antd';
 import axios from 'axios';
 import { connect } from "react-redux";
 import api from '../api';
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "../components/ImageUpload";
 
 const { TextArea } = Input;
 

@@ -14,11 +14,6 @@ function CustomMenu (props) {
     const [current, setCurrent] = useState('home');
     const [collapsed, setCollapsed] = useState(true);  
     const [searchValue, setSearchValue] = useState('');
-    const [isDark, setIsDark] = useState(false);
-
-    useEffect(() => {
-        setIsDark(props.isDark)
-    }, [props.isDark])
 
     const handleMenuClick = (e) => {        
         if (e.key === 'search') {
@@ -43,8 +38,8 @@ function CustomMenu (props) {
     }    
     
     const onSwitchChange = e => {
+        console.log(e);
         props.switch(e);
-        setIsDark(!isDark);
     }
 
     return (
@@ -92,7 +87,7 @@ function CustomMenu (props) {
                     </Menu>
                 </div>
             ) : (
-                <Menu id="menu" theme={isDark ? "dark" : "light"} mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]}>
+                <Menu id="menu" theme={props.isDark ? "dark" : "light"} mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]}>
                     <Menu.Item key="home" icon={<HomeOutlined />}>
                         <Link to="/">Home</Link>
                     </Menu.Item>
@@ -131,7 +126,7 @@ function CustomMenu (props) {
                     <Switch 
                         checkedChildren="Dark" 
                         unCheckedChildren="Light" 
-                        defaultChecked={isDark}
+                        defaultChecked={props.isDark}
                         onChange={onSwitchChange}
                     />                 
                 </Menu>
