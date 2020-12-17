@@ -131,7 +131,7 @@ function ItemCreate (props) {
 
 const mapStateToProps = state => {
     return {
-        token: state.auth.token
+        token: state.token
     }
 }
 

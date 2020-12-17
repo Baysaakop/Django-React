@@ -89,8 +89,8 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.auth.loading,        
-        token: state.auth.token
+        loading: state.loading,        
+        token: state.token
     }
 }
 

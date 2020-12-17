@@ -1,0 +1,111 @@
+.layout-light {
+    background-color: #f0f2f5;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.layout-dark {
+    background-color: #0d1117;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.header {    
+    display: inline-block;
+    z-index: 99;
+    position: relative;              
+    padding: 0;
+    transition: background-color 0.3s ease-out;
+}
+
+.header .logo {
+    font-family: 'Nerko One', cursive;
+    font-size: 32px;
+    float: left; 
+    margin-right: 16px;       
+    height: 30px;        
+}
+
+.layout-light .header {
+    background-color: #fff;
+    color:  rgba(0, 0, 0, 0.85);
+}
+
+.layout-dark .header {
+    background-color: #161b22;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.layout-light .header .menu {
+    background-color: #fff;
+}
+
+.layout-dark .header .menu {
+    background-color: #161b22;
+}
+
+.content {
+    padding: 0;
+    z-index: 1;
+    min-height: 80vh;
+    /* position: relative; */
+}
+
+.content .theme-switch-container {    
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 5%;
+}
+
+.content .content-item {
+    padding: 0 5% 32px 5%;    
+}
+
+.layout-light .content .ant-typography,
+.layout-light .content .ant-card-head,
+.layout-light .content .ant-card,
+.layout-light .content .ant-list-item,
+.layout-light .content a,
+.layout-light .content li,
+.layout-light .content .ant-pagination-item-link {
+    color:  rgba(0, 0, 0, 0.85);
+    background-color: #fff;
+}
+
+.layout-dark .content .ant-typography,
+.layout-dark .content .ant-card-head,
+.layout-dark .content .ant-card,
+.layout-dark .content .ant-list-item,
+.layout-dark .content a,
+.layout-dark .content li,
+.layout-dark .content .ant-pagination-item-link {
+    color: rgba(255, 255, 255, 0.85);
+    background-color: #161b22;
+}
+
+/* .layout-light .content .ant-card {
+    background-color: #fff;
+}
+
+.layout-dark .content .ant-card {
+    background-color: #161b22;
+} */
+
+.footer {
+    text-align: center;
+    padding: 0;
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout-light .footer,
+.layout-light .footer .ant-btn {
+    background-color: #fff;
+    color:  rgba(0, 0, 0, 0.85);
+}
+
+.layout-dark .footer,
+.layout-dark .footer .ant-btn {
+    background-color: #161b22;
+    color: rgba(255, 255, 255, 0.85);
+}

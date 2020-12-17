@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Divider, Grid, Menu, Input, Switch } from 'antd';
+import React, { useState } from 'react';
+import { Button, Grid, Menu, Input } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { BulbOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, QuestionCircleOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
-import * as themeActions from '../store/actions/theme';
 import SubMenu from 'antd/lib/menu/SubMenu';
 
 const { useBreakpoint } = Grid;
@@ -36,39 +35,30 @@ function CustomMenu (props) {
         var name = e.target.value;
         props.history.push(`/items?search=${name}`)
     }    
-    
-    const onSwitchChange = e => {
-        console.log(e);
-        props.switch(e);
-    }
 
     return (
         <div>
-            <div className="logo">
+            <div className="logo" style={{ marginLeft: '5%' }}>
                 Logo    
             </div>
             { screens.xs ? (
                 <div>
-                    <Button type="primary" onClick={handleMenuCollapsed} style={{ float: 'right', margin: '16px 0' }}>
+                    <Button type="primary" onClick={handleMenuCollapsed} style={{ float: 'right', marginTop: '5%', marginRight: '5%' }}>
                         <MenuOutlined />
                     </Button>
-                    <Menu id="menu" theme="light" mode="inline" hidden={collapsed} onClick={handleMenuClick} defaultSelectedKeys={[current]}>
+                    <Menu className="menu" theme={props.darkMode ? "dark" : "light"} mode="inline" hidden={collapsed} onClick={handleMenuClick} defaultSelectedKeys={[current]}>
                         <Menu.Item key="home" icon={<HomeOutlined />}>
                             <Link to="/">Home</Link>
                         </Menu.Item>
-                        <Divider style={{ margin: 0 }} />
                         <Menu.Item key="items" icon={<SkinOutlined />}>
                             <Link to="/items">Items</Link>
                         </Menu.Item>
-                        <Divider style={{ margin: 0 }} />
-                        <Menu.Item key="help" icon={<BulbOutlined />}>
+                        <Menu.Item key="help" icon={<QuestionCircleOutlined />}>
                             <Link to="/">Help</Link>
                         </Menu.Item>
-                        <Divider style={{ margin: 0 }} />
                         <Menu.Item key="contact" icon={<MailOutlined />}>
                             <Link to="/">Contact</Link>
-                        </Menu.Item>
-                        <Divider style={{ margin: 0 }} />
+                        </Menu.Item>                         
                         { props.username !== null ? (
                              <SubMenu key="user" icon={<UserOutlined />} title={props.username} >
                                 <Menu.Item key="profile" icon={<ProfileOutlined />} >
@@ -82,19 +72,18 @@ function CustomMenu (props) {
                             <Menu.Item key="signin" icon={<LoginOutlined />} >
                                 <Link to="/login">Sign in</Link>
                             </Menu.Item>
-                        ) } 
-                        <Divider style={{ margin: 0 }} />
+                        ) }                         
                     </Menu>
                 </div>
             ) : (
-                <Menu id="menu" theme={props.isDark ? "dark" : "light"} mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]}>
+                <Menu className="menu" theme={props.darkMode ? "dark" : "light"} mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]} style={{ marginRight: '5%' }}>
                     <Menu.Item key="home" icon={<HomeOutlined />}>
                         <Link to="/">Home</Link>
                     </Menu.Item>
                     <Menu.Item key="items" icon={<SkinOutlined />}>
                         <Link to="/items">Items</Link>
                     </Menu.Item>
-                    <Menu.Item key="help" icon={<BulbOutlined />}>
+                    <Menu.Item key="help" icon={<QuestionCircleOutlined />}>
                         <Link to="/">Help</Link>
                     </Menu.Item>
                     <Menu.Item key="contact" icon={<MailOutlined />}>
@@ -118,17 +107,11 @@ function CustomMenu (props) {
                         placeholder="Search..."
                         allowClear
                         prefix={<SearchOutlined />}
-                        style={{ width: 200 }}
+                        style={{ width: 200, float: 'right', margin: '16px' }}
                         onChange={onSearchChange}
                         onPressEnter={onSearch}
-                        value={searchValue}                                                
-                    /> 
-                    <Switch 
-                        checkedChildren="Dark" 
-                        unCheckedChildren="Light" 
-                        defaultChecked={props.isDark}
-                        onChange={onSwitchChange}
-                    />                 
+                        value={searchValue}                                                                       
+                    />               
                 </Menu>
             )}                
         </div>
@@ -137,8 +120,7 @@ function CustomMenu (props) {
 
 const mapDispatchToProps = dispatch => {
     return {
-        logout: () => dispatch(actions.logout()),        
-        switch: (isDark) => dispatch(themeActions.themeSwitch(isDark))
+        logout: () => dispatch(actions.logout())        
     }
 }
 

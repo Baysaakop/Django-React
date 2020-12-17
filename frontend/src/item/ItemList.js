@@ -47,6 +47,7 @@ function ItemList(props) {
             }
             renderItem={item => (
                 <List.Item
+                    style={{  border: '1px solid white' }}
                     key={item.title}
                     actions={[
                         <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
@@ -79,7 +80,7 @@ function ItemList(props) {
 
 const mapStateToProps = state => {
     return {
-        token: state.auth.token
+        token: state.token
     }
 }
 

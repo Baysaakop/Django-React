@@ -47,7 +47,7 @@ function Home (props) {
             </Carousel>
             <List
                 style={{ 
-                    marginTop: '24px'
+                    marginTop: '24px'                    
                 }}
                 grid={{
                     gutter: 16,
@@ -61,7 +61,7 @@ function Home (props) {
                 dataSource={data}
                 renderItem={item => (
                     <List.Item>
-                        <Card title={item.name}>
+                        <Card className="card-item" title={item.name}>
                             <Typography.Paragraph ellipsis={{ rows: 5 }}>
                                 {item.description}
                             </Typography.Paragraph>
