@@ -2,6 +2,7 @@ import { Card, Carousel, Typography, List } from 'antd';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';  
 import api from '../api';
+import { Link } from 'react-router-dom';
 
 const contentStyle = {
     height: '360px',
@@ -61,11 +62,13 @@ function Home (props) {
                 dataSource={data}
                 renderItem={item => (
                     <List.Item>
-                        <Card className="card-item" title={item.name}>
-                            <Typography.Paragraph ellipsis={{ rows: 5 }}>
-                                {item.description}
-                            </Typography.Paragraph>
-                        </Card>
+                        <Link to={`items/${item.id}`}>
+                            <Card className="card-item" title={item.name}>                        
+                                <Typography.Paragraph ellipsis={{ rows: 5 }}>
+                                    {item.description}
+                                </Typography.Paragraph>
+                            </Card>
+                        </Link>
                     </List.Item>
                 )}
             />

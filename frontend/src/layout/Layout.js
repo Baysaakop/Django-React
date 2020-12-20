@@ -38,19 +38,28 @@ function CustomLayout (props) {
             <Header className="header">
                 <CustomMenu {...props} darkMode={darkMode} />                
             </Header>
-            <Content className="content">     
+            <Content className="content">                                     
+                <div className="content-item">
+                    {props.children}                    
+                </div>                
                 <div className="theme-switch-container">
-                    <Switch                         
+                    {/* <Switch                         
                         className="theme-switch"
                         checkedChildren={<span><BulbFilled /> Light</span>}
                         unCheckedChildren={<span><BulbOutlined /> Dark</span>}
                         defaultChecked={!darkMode}
                         onChange={() => setDarkMode(prevMode => !prevMode)}                    
-                    />         
-                </div>                
-                <div className="content-item">
-                    {props.children}                    
-                </div>                
+                    />          */}
+                    <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+                        <Button 
+                            type={darkMode ? "primary" : "default"}
+                            shape="circle" 
+                            size="large" 
+                            icon={darkMode ? <BulbFilled /> : <BulbOutlined />} 
+                            onClick={() => setDarkMode(prevMode => !prevMode)}
+                        />
+                    </Tooltip>
+                </div>
             </Content>
             <Footer className="footer">
                 <div>

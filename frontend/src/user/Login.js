@@ -35,8 +35,7 @@ const Login = (props) => {
                     <Col xs={24} sm={16} md={12} lg={8} style={{ border: '1px solid #a1a1a1', padding: '16px' }}>
                         <Typography.Title level={3} style={{ textAlign: 'center' }}>
                             Login                    
-                        </Typography.Title>
-                        <Divider />
+                        </Typography.Title>                        
                         <Form                            
                             form={form}                            
                             name="normal_login"
