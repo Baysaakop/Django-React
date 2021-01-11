@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Layout, Switch, Tooltip } from 'antd';
+import { Button, Layout, Tooltip } from 'antd';
 import CustomMenu from './Menu';
 import './Layout.css';
 import { BulbFilled, BulbOutlined, FacebookFilled, GithubFilled, InstagramOutlined, TwitterOutlined, YoutubeFilled } from '@ant-design/icons';

@@ -46,7 +46,13 @@ function CustomMenu (props) {
                     <Button type="primary" onClick={handleMenuCollapsed} style={{ float: 'right', marginTop: '5%', marginRight: '5%' }}>
                         <MenuOutlined />
                     </Button>
-                    <Menu className="menu" theme={props.darkMode ? "dark" : "light"} mode="inline" hidden={collapsed} onClick={handleMenuClick} defaultSelectedKeys={[current]}>
+                    <Menu 
+                        className="menu" 
+                        theme={props.darkMode ? "dark" : "light"} 
+                        mode="inline" hidden={collapsed} 
+                        onClick={handleMenuClick}
+                        defaultSelectedKeys={[current]}
+                    >
                         <Menu.Item key="home" icon={<HomeOutlined />}>
                             <Link to="/">Home</Link>
                         </Menu.Item>
@@ -76,7 +82,14 @@ function CustomMenu (props) {
                     </Menu>
                 </div>
             ) : (
-                <Menu className="menu" theme={props.darkMode ? "dark" : "light"} mode="horizontal" onClick={handleMenuClick} defaultSelectedKeys={[current]} style={{ marginRight: '5%' }}>
+                <Menu 
+                    className="menu" 
+                    theme={props.darkMode ? "dark" : "light"} 
+                    mode="horizontal" 
+                    onClick={handleMenuClick} 
+                    defaultSelectedKeys={[current]} 
+                    style={{ marginRight: '5%' }}
+                >
                     <Menu.Item key="home" icon={<HomeOutlined />}>
                         <Link to="/">Home</Link>
                     </Menu.Item>
