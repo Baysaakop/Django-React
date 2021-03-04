@@ -9,11 +9,10 @@ export const authStart = () => {
     };
 }
 
-export const authSuccess = (token, username) => {
+export const authSuccess = (token) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        token: token,
-        username: username
+        token: token
     };
 }
 
@@ -25,38 +24,24 @@ export const authFail = error => {
 }
 
 export const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('expirationDate');    
+    localStorage.removeItem('token');    
     return {
         type: actionTypes.AUTH_LOGOUT
     };
 }
 
-export const checkAuthTimeout = expirationTime => {
-    return dispatch => {
-        setTimeout(() => {            
-            dispatch(logout());
-        }, expirationTime * 1000)
-    };
-}
-
-export const authLogin = (username, password) => {
+export const authLogin = (email, password) => {
     return dispatch => {
         dispatch(authStart());
         axios.post(api.signin, {
-            username: username,
+            email: email,
             password: password
         })
         .then(res => {
-            const token = res.data.key;
-            const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-            localStorage.setItem('token', token);
-            localStorage.setItem('username', username);
-            localStorage.setItem('expirationDate', expirationDate);
-            dispatch(authSuccess(token, username));
-            dispatch(checkAuthTimeout(3600));
-            message.info(`Welcome, ${username}`);
+            const token = res.data.key;            
+            localStorage.setItem('token', token);            
+            dispatch(authSuccess(token));            
+            // message.info(`Welcome, ${username}`);
         })
         .catch(err => {
             dispatch(authFail(err));
@@ -83,18 +68,15 @@ export const authSignup = (username, email, password1, password2) => {
         })
         .then(res => {
             const token = res.data.key;
-            const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-            localStorage.setItem('token', token);            
-            localStorage.setItem('username', username);
-            localStorage.setItem('expirationDate', expirationDate);
-            dispatch(authSuccess(token, username));
-            dispatch(checkAuthTimeout(3600));
-            message.info(`Welcome, ${username}`);
+            console.log(token)
+            // localStorage.setItem('token', token);                        
+            // dispatch(authSuccess(token, username));
+            // message.info(`Welcome, ${username}`);
         })
         .catch(err => {
             dispatch(authFail(err))
             if (err.message.includes("400")) {
-                message.error("Username or password is incorrect!")
+                message.error("Email is already registred.")
             } else if (err.message.includes("500")) {
                 message.error("Sorry, server error has occured. Please, try again later.")
             } else {
@@ -102,23 +84,5 @@ export const authSignup = (username, email, password1, password2) => {
                 console.log(err)
             }
         })
-    }
-}
-
-export const authCheckState = () => {
-    return dispatch => {        
-        const token = localStorage.getItem('token');
-        const username = localStorage.getItem('username');
-        if (token === undefined) {
-            dispatch(logout());
-        } else {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate <= new Date()) {
-                dispatch(logout());
-            } else {
-                dispatch(authSuccess(token, username));
-                dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000))
-            }
-        }
     }
 }

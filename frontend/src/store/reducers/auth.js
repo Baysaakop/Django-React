@@ -2,8 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
-    token: localStorage.getItem('token'),
-    username: localStorage.getItem('username'),
+    token: localStorage.getItem('token'),    
     error: null,
     loading: false    
 }
@@ -18,7 +17,6 @@ const authStart = (state, action) => {
 const authSuccess = (state, action) => {
     return updateObject(state, {
         token: action.token,        
-        username: action.username,
         error: null,
         loading: false
     });
@@ -34,7 +32,6 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
     return updateObject(state, {        
         token: null,
-        username: null
     });
 }
 

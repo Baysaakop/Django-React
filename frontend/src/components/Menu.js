@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Grid, Menu, Input } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import { HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, QuestionCircleOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
@@ -11,30 +11,40 @@ const { useBreakpoint } = Grid;
 function CustomMenu (props) {
     const screens = useBreakpoint();
     const [current, setCurrent] = useState('home');
-    const [collapsed, setCollapsed] = useState(true);  
-    const [searchValue, setSearchValue] = useState('');
+    const [collapsed, setCollapsed] = useState(true);      
 
-    const handleMenuClick = (e) => {        
-        if (e.key === 'search') {
-            return;
-        }        
+    useEffect(() => {
+        const menuItem = props.location.pathname.toString().split('/')[1]
+        switch(menuItem) {
+            case '':
+                setCurrent('home')
+                break
+            case 'items':
+                setCurrent('items')
+                break
+            case 'help':
+                setCurrent('help')
+                break
+            case 'contact':
+                setCurrent('contact')
+                break
+            case 'account':
+                setCurrent('account')
+                break
+            default:
+                setCurrent('home')
+                break
+        }
+    }, [props.location]);
+
+    const handleMenuClick = (e) => {               
         setCurrent(e.key);
-        setCollapsed(true);
-        setSearchValue('');
+        setCollapsed(true);        
     };
 
     const handleMenuCollapsed = () => {
         setCollapsed(!collapsed);
-    }
-
-    const onSearchChange = e => {
-        setSearchValue(e.target.value);
-    }
-
-    const onSearch = e => {        
-        var name = e.target.value;
-        props.history.push(`/items?search=${name}`)
-    }    
+    }     
 
     return (
         <div>
@@ -103,7 +113,7 @@ function CustomMenu (props) {
                         <Link to="/">Contact</Link>
                     </Menu.Item>                    
                     { props.username !== null ? (
-                        <SubMenu key="user" icon={<UserOutlined />} title={props.username} style={{ float: 'right' }} >
+                        <SubMenu key="user" icon={<UserOutlined />} title="User" style={{ float: 'right' }} >
                             <Menu.Item key="profile" icon={<ProfileOutlined />} >
                                 <Link to="/profile">Profile</Link>
                             </Menu.Item>
@@ -115,16 +125,7 @@ function CustomMenu (props) {
                         <Menu.Item key="login" icon={<LoginOutlined />} style={{ float: 'right' }} >
                             <Link to="/login">Sign in</Link>
                         </Menu.Item>
-                    ) }    
-                    <Input 
-                        placeholder="Search..."
-                        allowClear
-                        prefix={<SearchOutlined />}
-                        style={{ width: 200, float: 'right', margin: '16px' }}
-                        onChange={onSearchChange}
-                        onPressEnter={onSearch}
-                        value={searchValue}                                                                       
-                    />               
+                    ) }                                     
                 </Menu>
             )}                
         </div>

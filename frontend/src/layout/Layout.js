@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Layout, Tooltip } from 'antd';
-import CustomMenu from './Menu';
+import CustomMenu from '../components/Menu';
 import './Layout.css';
 import { BulbFilled, BulbOutlined, FacebookFilled, GithubFilled, InstagramOutlined, TwitterOutlined, YoutubeFilled } from '@ant-design/icons';
 
@@ -43,13 +43,6 @@ function CustomLayout (props) {
                     {props.children}                    
                 </div>                
                 <div className="theme-switch-container">
-                    {/* <Switch                         
-                        className="theme-switch"
-                        checkedChildren={<span><BulbFilled /> Light</span>}
-                        unCheckedChildren={<span><BulbOutlined /> Dark</span>}
-                        defaultChecked={!darkMode}
-                        onChange={() => setDarkMode(prevMode => !prevMode)}                    
-                    />          */}
                     <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
                         <Button 
                             type={darkMode ? "primary" : "default"}
@@ -75,11 +68,11 @@ function CustomLayout (props) {
                     <Tooltip title="Youtube">
                         <Button shape="circle" icon={<YoutubeFilled />} style={{ margin: '8px' }} size="large" /> 
                     </Tooltip>
-                    <Tooltip title="Youtube">
+                    <Tooltip title="Github">
                         <Button shape="circle" icon={<GithubFilled />} style={{ margin: '8px' }} size="large" /> 
                     </Tooltip>
                     <p>
-                        © 2020 Mollywood. All Rights Reserved. Designed and developed by On Plus.
+                        © 2021 Django and React Preoject. All Rights Reserved. Designed and developed by On Plus.
                     </p>
                 </div>                
             </Footer>
