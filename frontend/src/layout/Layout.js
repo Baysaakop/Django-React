@@ -1,13 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Layout, Tooltip } from 'antd';
+import { Grid, Button, Layout, Tooltip } from 'antd';
 import CustomMenu from '../components/Menu';
 import './Layout.css';
 import { BulbFilled, BulbOutlined, FacebookFilled, GithubFilled, InstagramOutlined, TwitterOutlined, YoutubeFilled } from '@ant-design/icons';
 
+const { useBreakpoint } = Grid;
 const { Header, Content, Footer } = Layout;
 
-function CustomLayout (props) {    
+const styleContentWeb = {
+    padding: '0',
+    zIndex: '1',    
+    position: 'relative',        
+}
 
+const styleContentSwitch = {
+    position: 'fixed',
+    zIndex: '2',
+    top: '50%',
+    right: '8%'
+}
+
+const styleContentItemWeb = {
+    padding: '0px 20%' 
+}
+
+const styleContentItemMobile = {
+    padding: '0px 5%' 
+}
+
+function CustomLayout (props) {    
+    const screens = useBreakpoint();
     const [darkMode, setDarkMode] = useState(getInitialMode());
 
     useEffect(() => {
@@ -38,11 +60,11 @@ function CustomLayout (props) {
             <Header className="header">
                 <CustomMenu {...props} darkMode={darkMode} />                
             </Header>
-            <Content className="content">                                     
-                <div className="content-item">
+            <Content className="content" style={styleContentWeb}>                                     
+                <div className="content-item" style={screens.xs ? styleContentItemMobile : styleContentItemWeb}>
                     {props.children}                    
                 </div>                
-                <div className="theme-switch-container">
+                <div className="theme-switch-container" style={styleContentSwitch}>
                     <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
                         <Button 
                             type={darkMode ? "primary" : "default"}
@@ -72,7 +94,7 @@ function CustomLayout (props) {
                         <Button shape="circle" icon={<GithubFilled />} style={{ margin: '8px' }} size="large" /> 
                     </Tooltip>
                     <p>
-                        © 2021 Django and React Preoject. All Rights Reserved. Designed and developed by On Plus.
+                        © 2021 Django and React Project. All Rights Reserved. Designed and developed by On Plus.
                     </p>
                 </div>                
             </Footer>

@@ -1,15 +1,13 @@
-.layout-light,
-.layout-light .content h1,
-.layout-light .content h3.ant-typography,
-.layout-light .content p {
+/* body {
+    font-family: 'Montserrat', sans-serif;
+} */
+
+.layout-light {
     background-color: #f0f2f5;
     color: rgba(0, 0, 0, 0.85);
 }
 
-.layout-dark,
-.layout-dark .content h1,
-.layout-dark .content h3.ant-typography,
-.layout-dark .content p {
+.layout-dark {
     background-color: #0d1117;
     color: rgba(255, 255, 255, 0.85);
 }
@@ -20,14 +18,7 @@
     position: relative;              
     padding: 0;
     transition: background-color 0.3s ease-out;
-}
-
-.header .logo {
-    font-family: 'Nerko One', cursive;
-    font-size: 32px;
-    float: left; 
-    margin-right: 16px;       
-    height: 30px;        
+    height: 80px;
 }
 
 .layout-light .header {
@@ -48,49 +39,53 @@
     background-color: #161b22;
 }
 
-.content {
-    padding: 0;
-    z-index: 1;
-    min-height: 80vh;
-    position: relative;
-    margin-top: 24px;
-}
-
-.content .theme-switch-container {    
-    /* display: flex;
-    justify-content: flex-end;
-    padding: 16px 5%; */
-    position: fixed;
-    z-index: 2;
-    top: 50%;
-    right: 1%;
-}
-
-.content .content-item {
-    padding: 0 5% 32px 5%;    
-}
-
-.layout-light .content .ant-typography,
-.layout-light .content .ant-card-head,
-.layout-light .content .ant-card,
-.layout-light .content .ant-list-item,
-.layout-light .content a,
-.layout-light .content li,
-.layout-light .content .ant-pagination-item-link {
-    color:  rgba(0, 0, 0, 0.85);
+.layout-light form {
     background-color: #fff;
+    color: rgba(0, 0, 0, 0.85);
+    border: 1px solid #000;
 }
 
-.layout-dark .content .ant-typography,
-.layout-dark .content .ant-card-head,
-.layout-dark .content .ant-card,
-.layout-dark .content .ant-list-item,
-.layout-dark .content a,
-.layout-dark .content li,
-.layout-dark .content .ant-pagination-item-link {
+.layout-dark form {
+    background-color: #0d1117;
     color: rgba(255, 255, 255, 0.85);
-    background-color: #161b22;
+    border: 1px solid #fff;
 }
+
+.layout-light .ant-form-item,
+.layout-light .ant-input-affix-wrapper,
+.layout-light .ant-input {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.85);    
+}
+
+.layout-dark .ant-form-item,
+.layout-dark .ant-input-affix-wrapper,
+.layout-dark .ant-input {
+    background-color: #0d1117;
+    color: rgba(255, 255, 255, 0.85);    
+}
+
+.layout-light .ant-typography,
+.layout-light label,
+.layout-light .ant-divider-inner-text {    
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.layout-dark .ant-typography,
+.layout-dark label,
+.layout-dark .ant-divider-inner-text {    
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.layout-light .ant-divider {    
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.layout-dark .ant-divider {    
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+
 
 .footer {
     text-align: center;
@@ -98,7 +93,7 @@
     min-height: 20vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;    
 }
 
 .layout-light .footer,

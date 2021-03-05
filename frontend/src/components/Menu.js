@@ -1,14 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Menu, Input } from 'antd';
+import { Button, Grid, Menu, Input, Avatar, Dropdown } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, QuestionCircleOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
+import { BellOutlined, CloseCircleOutlined, CoffeeOutlined, DownOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, QuestionCircleOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
-import SubMenu from 'antd/lib/menu/SubMenu';
+import logo from './onplus-logo.png';
 
+const { SubMenu, Item } = Menu;
 const { useBreakpoint } = Grid;
 
-function CustomMenu (props) {
+const styleHeaderWeb = {
+    display: 'flex',
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    padding: '0 20%',
+    height: '80px',
+    boxShadow: '0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%)'
+}
+
+const styleHeaderMobile = {
+    display: 'flex',
+    justifyContent: 'space-between', 
+    alignItems: 'center',
+    padding: '5%',
+    height: '80px',
+    boxShadow: '0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%)'
+}
+
+const styleLogo = {
+    display: 'flex',
+    justifyContent: 'space-between', 
+    alignItems: 'center',    
+    height: '80px'
+}
+
+const styleLogoText = {
+    display: 'flex',
+    justifyContent: 'space-between', 
+    alignItems: 'center',    
+    height: '80px'
+}
+
+const styleMenuWeb = {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%'
+}
+
+const styleMenuMobile = {
+    width: '100%',    
+}
+
+const styleMenuItem = {
+    fontSize: '18px'
+}
+
+const styleAccount = {
+    display: 'flex',
+    justifyContent: 'end', 
+    alignItems: 'center',    
+    height: '80px'
+}
+
+function CustomMenu (props) {    
+    const accountMenu = (
+        <Menu>
+            <Item key="profile" style={styleMenuItem} icon={<UserOutlined style={{ fontSize: '16px' }} />}>
+                <a href="/profile">Profile</a>                
+            </Item>
+            <Item key="notification" style={styleMenuItem} icon={<BellOutlined style={{ fontSize: '16px' }} />}>
+                <a href="/notification">Notification</a>
+            </Item>            
+            <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />} onClick={props.logout}>
+                Log Out
+            </Item>            
+        </Menu>
+    )
+
     const screens = useBreakpoint();
     const [current, setCurrent] = useState('home');
     const [collapsed, setCollapsed] = useState(true);      
@@ -47,89 +117,123 @@ function CustomMenu (props) {
     }     
 
     return (
-        <div>
-            <div className="logo" style={{ marginLeft: '5%' }}>
-                Logo    
-            </div>
-            { screens.xs ? (
+        <div>              
+            {screens.xs ? (
                 <div>
-                    <Button type="primary" onClick={handleMenuCollapsed} style={{ float: 'right', marginTop: '5%', marginRight: '5%' }}>
-                        <MenuOutlined />
-                    </Button>
+                    <div style={styleHeaderMobile}>
+                        <Link to="/">
+                            <div style={styleLogo}>         
+                                <div>
+                                    <Avatar size="large" src={logo} /> 
+                                </div>
+                                <div style={{ color: props.darkMode ? '#fff' : '#000', fontSize: '24px', marginLeft: '8px' }}>                        
+                                    On Plus                        
+                                </div>                        
+                            </div>       
+                        </Link>
+                        <Button type="primary" onClick={handleMenuCollapsed} style={ props.darkMode ? { background: '#161b22', color: '#fff', border: '1px solid #fff' } : { background: '#fff', color: '#000', border: '1px solid #000' }}>
+                            <MenuOutlined />
+                        </Button>
+                    </div>
                     <Menu 
                         className="menu" 
                         theme={props.darkMode ? "dark" : "light"} 
-                        mode="inline" hidden={collapsed} 
+                        mode="inline" 
+                        hidden={collapsed} 
                         onClick={handleMenuClick}
-                        defaultSelectedKeys={[current]}
-                    >
-                        <Menu.Item key="home" icon={<HomeOutlined />}>
-                            <Link to="/">Home</Link>
-                        </Menu.Item>
-                        <Menu.Item key="items" icon={<SkinOutlined />}>
+                        selectedKeys={[current]}
+                        style={styleMenuMobile}
+                    >                
+                        <Item key="items" icon={<CoffeeOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} >
                             <Link to="/items">Items</Link>
-                        </Menu.Item>
-                        <Menu.Item key="help" icon={<QuestionCircleOutlined />}>
-                            <Link to="/">Help</Link>
-                        </Menu.Item>
-                        <Menu.Item key="contact" icon={<MailOutlined />}>
-                            <Link to="/">Contact</Link>
-                        </Menu.Item>                         
-                        { props.username !== null ? (
-                             <SubMenu key="user" icon={<UserOutlined />} title={props.username} >
-                                <Menu.Item key="profile" icon={<ProfileOutlined />} >
-                                    <Link to="/profile">Profile</Link>
-                                </Menu.Item>
-                                <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={props.logout}>
-                                    Log out
-                                </Menu.Item>
-                            </SubMenu>
+                        </Item>
+                        <Item key="help" icon={<QuestionCircleOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} >
+                            <Link to="/help">Help</Link>
+                        </Item>
+                        <Item key="contact" icon={<MailOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem}>
+                            <Link to="/contact">Contact</Link>
+                        </Item>                   
+                        { props.token !== null ? (
+                            <SubMenu key="account" icon={<UserOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} title="User">
+                                <Item key="profile" style={styleMenuItem} icon={<UserOutlined style={{ fontSize: '16px' }} />}>
+                                    <a href="/profile">Profile</a>                
+                                </Item>
+                                <Item key="notification" style={styleMenuItem} icon={<BellOutlined style={{ fontSize: '16px' }} />}>
+                                    <a href="/notification">Notification</a>
+                                </Item>            
+                                <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />} onClick={props.logout}>
+                                    Log Out
+                                </Item>   
+                            </SubMenu> 
                         ) : (
-                            <Menu.Item key="signin" icon={<LoginOutlined />} >
-                                <Link to="/login">Sign in</Link>
-                            </Menu.Item>
-                        ) }                         
+                            <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '16px' }}>
+                                <Button href="/login" size="large" type="default" style={ props.darkMode ? { background: '#161b22', color: '#fff', fontSize: '18px', marginRight: '8px' } : { fontSize: '18px', marginRight: '8px' }}>Login</Button>
+                                <Button href="/signup" size="large" type="primary" style={{ fontSize: '18px' }}>Sign Up</Button>
+                            </div>
+                        ) }                                                                             
                     </Menu>
                 </div>
             ) : (
-                <Menu 
-                    className="menu" 
-                    theme={props.darkMode ? "dark" : "light"} 
-                    mode="horizontal" 
-                    onClick={handleMenuClick} 
-                    defaultSelectedKeys={[current]} 
-                    style={{ marginRight: '5%' }}
-                >
-                    <Menu.Item key="home" icon={<HomeOutlined />}>
-                        <Link to="/">Home</Link>
-                    </Menu.Item>
-                    <Menu.Item key="items" icon={<SkinOutlined />}>
-                        <Link to="/items">Items</Link>
-                    </Menu.Item>
-                    <Menu.Item key="help" icon={<QuestionCircleOutlined />}>
-                        <Link to="/">Help</Link>
-                    </Menu.Item>
-                    <Menu.Item key="contact" icon={<MailOutlined />}>
-                        <Link to="/">Contact</Link>
-                    </Menu.Item>                    
-                    { props.username !== null ? (
-                        <SubMenu key="user" icon={<UserOutlined />} title="User" style={{ float: 'right' }} >
-                            <Menu.Item key="profile" icon={<ProfileOutlined />} >
-                                <Link to="/profile">Profile</Link>
-                            </Menu.Item>
-                            <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={props.logout}>
-                                Log out
-                            </Menu.Item>
-                        </SubMenu>
-                    ) : (
-                        <Menu.Item key="login" icon={<LoginOutlined />} style={{ float: 'right' }} >
-                            <Link to="/login">Sign in</Link>
+                <div style={styleHeaderWeb}>
+                    <Link to="/">
+                        <div style={styleLogo}>         
+                            <div>
+                                <Avatar size="large" src={logo} /> 
+                            </div>
+                            <div style={{ color: props.darkMode ? '#fff' : '#000', fontSize: '24px', marginLeft: '8px' }}>                        
+                                On Plus                        
+                            </div>                        
+                        </div>       
+                    </Link>
+                    <Menu 
+                        className="menu" 
+                        theme={props.darkMode ? "dark" : "light"} 
+                        mode="horizontal" 
+                        onClick={handleMenuClick} 
+                        selectedKeys={[current]} 
+                        style={styleMenuWeb}
+                    >                
+                        <Menu.Item key="items" icon={<CoffeeOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} >
+                            <Link to="/items">Items</Link>
                         </Menu.Item>
-                    ) }                                     
-                </Menu>
-            )}                
+                        <Menu.Item key="help" icon={<QuestionCircleOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} >
+                            <Link to="/help">Help</Link>
+                        </Menu.Item>
+                        <Menu.Item key="contact" icon={<MailOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem}>
+                            <Link to="/contact">Contact</Link>
+                        </Menu.Item>                                                                      
+                    </Menu>
+                    <div style={styleAccount}>
+                        { props.token !== null ? (
+                            <div style={styleLogo}>
+                                <div>
+                                    <Avatar icon={<UserOutlined />} />
+                                </div>
+                                <div style={{ color: '#000', fontSize: '18px', marginLeft: '8px' }}>           
+                                    <Dropdown overlay={accountMenu} placement="bottomRight" trigger={['click']}>
+                                        <a className="ant-dropdown-link" style={{ color: props.darkMode ? '#fff' : '#000' }}>
+                                            User <DownOutlined />
+                                        </a>
+                                    </Dropdown>                                         
+                                </div>                                                    
+                            </div>
+                        ) : (
+                            <div>
+                                <Button href="/login" size="large" type="default" style={ props.darkMode ? { background: '#161b22', color: '#fff', fontSize: '18px', marginRight: '8px' } : { fontSize: '18px', marginRight: '8px' }}>Login</Button>
+                                <Button href="/signup" size="large" type="primary" style={{ fontSize: '18px' }}>Sign Up</Button>
+                            </div>
+                        ) }   
+                    </div>
+                </div>
+            )}                        
         </div>
     )
+}
+
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -138,4 +242,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(CustomMenu));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CustomMenu));
