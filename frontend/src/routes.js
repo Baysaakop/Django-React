@@ -8,6 +8,8 @@ import ItemList from './item/ItemList';
 import ItemDetail from './item/ItemDetail';
 import ItemCreate from './item/ItemCreate';
 import ItemUpdate from './item/ItemUpdate';
+import Logout from './account/Logout';
+import PasswordReset from './account/PasswordReset';
 
 function BaseRouter () {
     return (
@@ -20,7 +22,9 @@ function BaseRouter () {
             <Route exact path="/updateitem/:itemID" component={ItemUpdate} />
             {/* User urls */}
             <Route exact path="/login" component={Login} />
+            <Route exact path="/logout" component={Logout} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/password/reset" component={PasswordReset} />            
             <Route exact path="/profile" component={Profile} />            
         </Switch>
     )    

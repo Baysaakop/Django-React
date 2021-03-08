@@ -10,7 +10,7 @@ const { Header, Content, Footer } = Layout;
 const styleContentWeb = {
     padding: '0',
     zIndex: '1',    
-    position: 'relative',        
+    position: 'relative',            
 }
 
 const styleContentSwitch = {
@@ -21,11 +21,11 @@ const styleContentSwitch = {
 }
 
 const styleContentItemWeb = {
-    padding: '0px 20%' 
+    padding: '24px 15%' 
 }
 
 const styleContentItemMobile = {
-    padding: '0px 5%' 
+    padding: '5%' 
 }
 
 function CustomLayout (props) {    
@@ -94,7 +94,7 @@ function CustomLayout (props) {
                         <Button shape="circle" icon={<GithubFilled />} style={{ margin: '8px' }} size="large" /> 
                     </Tooltip>
                     <p>
-                        © 2021 Django and React Project. All Rights Reserved. Designed and developed by On Plus.
+                        © 2021 Django and React Project. All Rights Reserved. Designed and developed by On Plus Tech.
                     </p>
                 </div>                
             </Footer>

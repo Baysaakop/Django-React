@@ -1,10 +1,8 @@
-import { Button, Col, Result, Row, Typography } from 'antd';
+import { Breadcrumb, Button, Result, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import api from '../api';
-import Avatar from 'antd/lib/avatar/avatar';
-import { CalendarOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 
 function Profile (props) {
 
@@ -28,22 +26,27 @@ function Profile (props) {
 
     return (
         <div>
+            <Breadcrumb>
+                <Breadcrumb.Item>
+                    <a href="/">Home</a>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>
+                    Profile
+                </Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="container" style={{ margin: '16px 0' }}>
             {user ? (
-                <Row gutter={[16, 16]} style={{ width: 400 }}>
-                    <Col span={8}>
-                        <Avatar size={96} icon={<UserOutlined />} />
-                    </Col>
-                    <Col span={16} style={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography.Title level={3}>{user.username}</Typography.Title>
-                        <a href="/">[Edit]</a>
-                        {/* <p>E-mail: {user.email}</p> */}
-                    </Col>                    
-                    <Col span={24} style={{ paddingLeft: '16px' }}>
-                        <p ><MailOutlined /> {user.email}</p>                        
-                        <p><PhoneOutlined /> 99113355</p>
-                        <p><CalendarOutlined /> 2000-05-20</p>
-                    </Col>
-                </Row>
+                <Tabs tabPosition="left" style={{ minHeight: '80vh' }}>
+                    <Tabs.TabPane tab="Account details" key="1">
+                        <div style={{ padding: '8px' }}>Account details</div>
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="User activity" key="2">
+                        <div style={{ padding: '8px' }}>User activity</div>                        
+                    </Tabs.TabPane>
+                    <Tabs.TabPane tab="Data" key="3">
+                        <div style={{ padding: '8px' }}>Data</div>        
+                    </Tabs.TabPane>
+                </Tabs>                
             ) : (
                 <Result
                     status="403"
@@ -52,6 +55,7 @@ function Profile (props) {
                     extra={<Button type="primary" href="/login">Go to login page</Button>}
                 />
             )}
+            </div>
         </div>
     )
 }

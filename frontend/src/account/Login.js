@@ -1,29 +1,31 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, Typography, Spin, Row, Col, Divider } from 'antd';
-import { FacebookFilled, FacebookOutlined, GoogleOutlined, GooglePlusOutlined, LoadingOutlined, LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Form, Input, Button, Typography, Spin, Row, Col, Divider, message } from 'antd';
+import { FacebookFilled, GoogleOutlined, LoadingOutlined, LockOutlined, MailOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import svg from './signin.svg';
+import { Redirect } from 'react-router-dom';
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Login = (props) => {
     const [form] = Form.useForm();    
-
-    useEffect(() => {
-        if (props.token) {
-            props.history.goBack();
-        }  
-    }, [props.token, props.history])
     
     const onFinish = (values) => {                
-        props.onAuth(values.username, values.password);       
-        // props.history.goBack();
+        props.onAuth(values.email, values.password);               
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+    if (props.token) {
+        message.info("Signed in.")
+        return <Redirect to="/" />
+    }
+
+    if (props.error) {
+        const errorMessage = props.error.message.toString()
+        if (errorMessage.endsWith('400')) {
+            message.error("Authentication failed! Username or password is incorrect.")
+        }  
+    }
 
     return (
         <Row gutter={[16, 16]}>            
@@ -81,7 +83,8 @@ const Login = (props) => {
                                 >
                                     <Input.Password prefix={<LockOutlined style={{ color: '#555' }} />} placeholder="Password" />
                                 </Form.Item>
-                                <Form.Item>
+                                <a href="/password/reset">Forgot your password?</a>
+                                <Form.Item style={{ marginTop: '16px' }}>
                                     <Button size="large" type="primary" htmlType="submit" style={{ width: '100%' }}>
                                         Sign in
                                     </Button>
@@ -110,13 +113,15 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,        
-        token: state.token
+        token: state.token,
+        error: state.error,
+        created: state.created
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, password) => dispatch(actions.authLogin(username, password))
+        onAuth: (email, password) => dispatch(actions.authLogin(email, password))
     }
 }
 

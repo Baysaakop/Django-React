@@ -23,8 +23,15 @@ export const authFail = error => {
     };
 }
 
+export const authCreated = () => {
+    return {
+        type: actionTypes.AUTH_CREATED        
+    };
+}
+
 export const logout = () => {
     localStorage.removeItem('token');    
+    message.info("Signed out")
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -37,28 +44,19 @@ export const authLogin = (email, password) => {
             email: email,
             password: password
         })
-        .then(res => {
+        .then(res => {            
             const token = res.data.key;            
             localStorage.setItem('token', token);            
-            dispatch(authSuccess(token));            
-            // message.info(`Welcome, ${username}`);
+            dispatch(authSuccess(token));                        
         })
         .catch(err => {
-            dispatch(authFail(err));
-            if (err.message.includes("400")) {
-                message.error("Username or password is incorrect!")
-            } else if (err.message.includes("500")) {
-                message.error("Sorry, server error has occured. Please, try again later.")
-            } else {
-                message.error("Error has occured. Try again.")
-                console.log(err)
-            }
+            dispatch(authFail(err));            
         })
     }
 }
 
 export const authSignup = (username, email, password1, password2) => {
-    return dispatch => {
+    return dispatch => {        
         dispatch(authStart());
         axios.post(api.signup, {
             username: username,
@@ -67,22 +65,24 @@ export const authSignup = (username, email, password1, password2) => {
             password2: password2
         })
         .then(res => {
-            const token = res.data.key;
-            console.log(token)
-            // localStorage.setItem('token', token);                        
-            // dispatch(authSuccess(token, username));
-            // message.info(`Welcome, ${username}`);
+            dispatch(authCreated())           
         })
         .catch(err => {
             dispatch(authFail(err))
-            if (err.message.includes("400")) {
-                message.error("Email is already registred.")
-            } else if (err.message.includes("500")) {
-                message.error("Sorry, server error has occured. Please, try again later.")
-            } else {
-                message.error("Error has occured. Try again.")
-                console.log(err)
-            }
+        })
+    }
+}
+
+export const authPasswordReset = (email) => {
+    return dispatch => {        
+        axios.post(api.passwordreset, {
+            email: email            
+        })
+        .then(res => {            
+            console.log(res)                    
+        })
+        .catch(err => {
+            dispatch(authFail(err));            
         })
     }
 }

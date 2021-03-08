@@ -4,7 +4,8 @@ import { updateObject } from '../utility';
 const initialState = {
     token: localStorage.getItem('token'),    
     error: null,
-    loading: false    
+    loading: false,
+    created: false    
 }
 
 const authStart = (state, action) => {
@@ -18,7 +19,8 @@ const authSuccess = (state, action) => {
     return updateObject(state, {
         token: action.token,        
         error: null,
-        loading: false
+        loading: false,
+        created: false
     });
 }
 
@@ -35,6 +37,15 @@ const authLogout = (state, action) => {
     });
 }
 
+const authCreated = (state, action) => {
+    return updateObject(state, {
+        token: null,
+        error: null,
+        loading: false,
+        created: true
+    });
+}
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.AUTH_START:
@@ -44,7 +55,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.AUTH_FAIL:
             return authFail(state, action);
         case actionTypes.AUTH_LOGOUT:
-            return authLogout(state, action);        
+            return authLogout(state, action); 
+        case actionTypes.AUTH_CREATED:
+            return authCreated(state, action);        
         default:
             return state;
     }

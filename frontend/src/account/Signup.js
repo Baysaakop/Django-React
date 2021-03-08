@@ -1,33 +1,46 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, Typography, Spin, Row, Col, Divider } from 'antd';
+import React from 'react';
+import { Form, Input, Button, Typography, Spin, Row, Col, Divider, message } from 'antd';
 import { LoadingOutlined, LockOutlined, MailOutlined, UserOutlined, GoogleOutlined, FacebookFilled } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import svg from './signup.svg';
+import { Redirect } from 'react-router';
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 const Signup = (props) => {
     const [form] = Form.useForm();    
-
-    useEffect(() => {
-        if (props.token) {
-            props.history.goBack();
-        }  
-    }, [props.token, props.history])
     
     const onFinish = (values) => {        
         props.onAuth(values.username, values.email, values.password, values.confirm);        
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
+    if (props.token) {
+        message.warning("You are already signed in!")
+        return <Redirect to="/" />
+    }
+
+    if (props.created) {
+        message.info("We have sent you an email to activate your account. Please check you e-mail.")
+        return <Redirect to="/" />
+    }
+
+    if (props.error) {
+        const errorMessage = props.error.message.toString()
+        if (errorMessage.endsWith('400')) {
+            message.error("E-mail is already registered!")
+        }    
+    }
 
     return (
         <Row gutter={[16, 16]}>            
             <Col xs={24} sm={12}>
-                <div style={{ height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>            
+                <div style={{ height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    <img src={svg} alt="illustration-login" style={{ width: '70%', height: 'auto' }} />
+                </div>
+            </Col>
+            <Col xs={24} sm={12}>
+                <div style={{ minHeight: '400px', padding: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>            
                     {props.loading ? (
                         <Spin indicator={loadingIcon} />
                     ) : (
@@ -130,12 +143,7 @@ const Signup = (props) => {
                         </div>
                     )}  
                 </div>   
-            </Col>
-            <Col xs={24} sm={12}>
-                <div style={{ height: '80vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <img src={svg} alt="illustration-login" style={{ width: '70%', height: 'auto' }} />
-                </div>
-            </Col>
+            </Col>            
         </Row>                              
     );
 };
@@ -143,7 +151,9 @@ const Signup = (props) => {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,        
-        token: state.token
+        token: state.token,
+        created: state.created,
+        error: state.error
     }
 }
 

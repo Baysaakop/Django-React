@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Grid, Menu, Input, Avatar, Dropdown } from 'antd';
+import { Button, Grid, Menu, Avatar, Dropdown } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { BellOutlined, CloseCircleOutlined, CoffeeOutlined, DownOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MailOutlined, MenuOutlined, ProfileOutlined, QuestionCircleOutlined, SearchOutlined, SkinOutlined, UserOutlined } from '@ant-design/icons';
+import { BellOutlined, CloseCircleOutlined, CoffeeOutlined, DownOutlined, MailOutlined, MenuOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import logo from './onplus-logo.png';
+import axios from 'axios';
+import api from '../api';
 
 const { SubMenu, Item } = Menu;
 const { useBreakpoint } = Grid;
@@ -13,7 +15,7 @@ const styleHeaderWeb = {
     display: 'flex',
     justifyContent: 'space-between', 
     alignItems: 'center',
-    padding: '0 20%',
+    padding: '0 15%',
     height: '80px',
     boxShadow: '0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%)'
 }
@@ -28,13 +30,6 @@ const styleHeaderMobile = {
 }
 
 const styleLogo = {
-    display: 'flex',
-    justifyContent: 'space-between', 
-    alignItems: 'center',    
-    height: '80px'
-}
-
-const styleLogoText = {
     display: 'flex',
     justifyContent: 'space-between', 
     alignItems: 'center',    
@@ -66,15 +61,15 @@ const styleAccount = {
 
 function CustomMenu (props) {    
     const accountMenu = (
-        <Menu>
+        <Menu className="menu"  theme={props.darkMode ? "dark" : "light"} >
             <Item key="profile" style={styleMenuItem} icon={<UserOutlined style={{ fontSize: '16px' }} />}>
                 <a href="/profile">Profile</a>                
             </Item>
             <Item key="notification" style={styleMenuItem} icon={<BellOutlined style={{ fontSize: '16px' }} />}>
                 <a href="/notification">Notification</a>
             </Item>            
-            <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />} onClick={props.logout}>
-                Log Out
+            <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />}>
+                <a href="/logout">Log Out</a>
             </Item>            
         </Menu>
     )
@@ -82,6 +77,7 @@ function CustomMenu (props) {
     const screens = useBreakpoint();
     const [current, setCurrent] = useState('home');
     const [collapsed, setCollapsed] = useState(true);      
+    const [user, setUser] = useState();
 
     useEffect(() => {
         const menuItem = props.location.pathname.toString().split('/')[1]
@@ -105,7 +101,26 @@ function CustomMenu (props) {
                 setCurrent('home')
                 break
         }
-    }, [props.location]);
+        if (props.token) {
+            if (!user) {
+                axios({
+                    method: 'GET',
+                    url: api.profile,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Token ${props.token}`
+                    }
+                }).then(res => {
+                    console.log(res.data)
+                    setUser(res.data)
+                }).catch(err => {
+                    console.log(err.message)
+                })
+            }
+        } else {
+            setUser(null)
+        }
+    }, [props.location, props.token, user]);
 
     const handleMenuClick = (e) => {               
         setCurrent(e.key);
@@ -153,16 +168,16 @@ function CustomMenu (props) {
                         <Item key="contact" icon={<MailOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem}>
                             <Link to="/contact">Contact</Link>
                         </Item>                   
-                        { props.token !== null ? (
-                            <SubMenu key="account" icon={<UserOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} title="User">
+                        { user && user !== null ? (
+                            <SubMenu key="account" icon={<UserOutlined style={{ fontSize: '18px' }} />} style={styleMenuItem} title={user.username}>
                                 <Item key="profile" style={styleMenuItem} icon={<UserOutlined style={{ fontSize: '16px' }} />}>
                                     <a href="/profile">Profile</a>                
                                 </Item>
                                 <Item key="notification" style={styleMenuItem} icon={<BellOutlined style={{ fontSize: '16px' }} />}>
                                     <a href="/notification">Notification</a>
                                 </Item>            
-                                <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />} onClick={props.logout}>
-                                    Log Out
+                                <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />}>
+                                    <a href="logout">Log Out</a>
                                 </Item>   
                             </SubMenu> 
                         ) : (
@@ -204,15 +219,15 @@ function CustomMenu (props) {
                         </Menu.Item>                                                                      
                     </Menu>
                     <div style={styleAccount}>
-                        { props.token !== null ? (
+                        { user && user !== null ? (
                             <div style={styleLogo}>
                                 <div>
                                     <Avatar icon={<UserOutlined />} />
                                 </div>
                                 <div style={{ color: '#000', fontSize: '18px', marginLeft: '8px' }}>           
                                     <Dropdown overlay={accountMenu} placement="bottomRight" trigger={['click']}>
-                                        <a className="ant-dropdown-link" style={{ color: props.darkMode ? '#fff' : '#000' }}>
-                                            User <DownOutlined />
+                                        <a href="/profile" className="ant-dropdown-link" style={{ color: props.darkMode ? '#fff' : '#000' }}>
+                                            {user.username} <DownOutlined />
                                         </a>
                                     </Dropdown>                                         
                                 </div>                                                    
