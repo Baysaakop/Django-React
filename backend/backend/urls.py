@@ -4,6 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from dj_rest_auth.registration.views import VerifyEmailView, ConfirmEmailView
 from dj_rest_auth.views import PasswordResetConfirmView
+from users.views import FacebookLogin
 
 urlpatterns = [
     path('admin/', admin.site.urls),    
@@ -12,6 +13,7 @@ urlpatterns = [
     path('rest-auth/registration/', include('dj_rest_auth.registration.urls')),
     path('rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     path('rest-auth/password/reset/confirm/<slug:uidb64>/<slug:token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('rest-auth/facebook/', FacebookLogin.as_view(), name='fb_login'),
     path("api/items/", include('items.urls')),
     path("api/users/", include('users.urls')),    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

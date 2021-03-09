@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'allauth.account',    
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'django_filters',
     'users',
     'items'
@@ -123,7 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 REST_USE_JWT = False
-# JWT_AUTH_COOKIE = 'boilerplate-auth' # The cookie key name can be the one you want
+# JWT_AUTH_COOKIE = 'my-app-auth' # The cookie key name can be the one you want
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
@@ -141,7 +142,7 @@ REST_FRAMEWORK = {
 }
 
 REST_AUTH_SERIALIZERS = {
-    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',        
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',         
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -152,8 +153,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
-LOGIN_URL = 'http://localhost:3000/login'
-CUSTOM_PASSWORD_RESET_CONFIRM = 'http://localhost:3000/login'
+LOGIN_URL = 'http://localhost:8000/login'
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
