@@ -10,6 +10,7 @@ import ItemCreate from './item/ItemCreate';
 import ItemUpdate from './item/ItemUpdate';
 import Logout from './account/Logout';
 import PasswordReset from './account/PasswordReset';
+import PasswordResetConfirm from './account/PasswordResetConfirm';
 
 function BaseRouter () {
     return (
@@ -24,8 +25,9 @@ function BaseRouter () {
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/signup" component={Signup} />
-            <Route exact path="/password/reset" component={PasswordReset} />            
-            <Route exact path="/profile" component={Profile} />            
+            <Route exact path="/password/reset" component={PasswordReset} />         
+            <Route exact path="/rest-auth/password/reset/confirm/:uid/:token" component={PasswordResetConfirm} />            
+            <Route exact path="/profile" component={Profile} />                        
         </Switch>
     )    
 }

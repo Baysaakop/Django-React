@@ -15,7 +15,7 @@ const Logout = (props) => {
     }
 
     return (
-       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '70vh' }}>
            <Result
                 status="warning"
                 title="Are you sure to sign out?"
