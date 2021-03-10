@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import svg from './signin.svg';
 import { Redirect } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import './Login.css';
 
 const loadingIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -25,6 +28,14 @@ const Login = (props) => {
         if (errorMessage.endsWith('400')) {
             message.error("Authentication failed! Username or password is incorrect.")
         }  
+    }
+
+    function authFacebook (response) {
+        props.onAuthFacebook(response.accessToken)
+    }
+
+    function authGoogle (response) {
+        console.log(response)
     }
 
     return (
@@ -89,13 +100,25 @@ const Login = (props) => {
                                         Sign in
                                     </Button>
                                 </Form.Item>
-                                <Divider>OR</Divider>
-                                <Button size="large" danger type="primary" icon={<GoogleOutlined style={{ fontSize: '18px' }} />} style={{ width: '100%', marginBottom: '16px' }}>
-                                    Sign in with Google
-                                </Button>
-                                <Button size="large" type="primary" icon={<FacebookFilled style={{ fontSize: '18px' }} />} style={{ width: '100%' }}>
-                                    Sign in with Facebook
-                                </Button>
+                                <Divider>OR</Divider>                                
+                                <GoogleLogin                                                                                                            
+                                    clientId="<Google Client ID>"
+                                    buttonText=" Sign in with Google"
+                                    render={renderProps => (
+                                        <Button size="large" danger type="primary" onClick={renderProps.onClick} icon={<GoogleOutlined style={{ fontSize: '18px' }} />} style={{ width: '100%', marginBottom: '16px' }}>
+                                            Sign in with Google
+                                        </Button>
+                                    )}
+                                    onSuccess={authGoogle}                                    
+                                />
+                                <FacebookLogin
+                                    cssClass="login-facebook"
+                                    icon={<FacebookFilled />}
+                                    textButton=" Sign in with Facebook"
+                                    appId="265092655117778"
+                                    fields="name,email,picture"                                    
+                                    callback={authFacebook}                                    
+                                />                                
                             </Form>                    
                         </div>
                     )}  
@@ -121,7 +144,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (email, password) => dispatch(actions.authLogin(email, password))
+        onAuth: (email, password) => dispatch(actions.authLogin(email, password)),
+        onAuthFacebook: (access_token) => dispatch(actions.authFacebook(access_token))
     }
 }
 

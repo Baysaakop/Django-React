@@ -35,23 +35,25 @@ const ImageUpload = (props) => {
     }
 
     const uploadButton = (
-        <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '100%' }}>
+            <div>
+                {loading ? <LoadingOutlined /> : <PlusOutlined />}
+                <div style={{ marginTop: 8 }}>Upload</div>
+            </div>
         </div>
     );
 
     return (
-        <Upload
+        <Upload            
             name="image"
             multiple={false}
             listType="picture-card"
             className="image-uploader"
             showUploadList={false}            
             beforeUpload={() => false}
-            onChange={handleChange}
+            onChange={handleChange}                             
         >
-            {imageUrl ? <img src={imageUrl} alt="upload" style={{ width: '100%' }} /> : uploadButton}
+            {imageUrl ? <img src={imageUrl} alt="upload" style={{ width: '80%', height: 'auto' }} /> : uploadButton}
         </Upload>
     );
 };

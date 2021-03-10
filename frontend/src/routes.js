@@ -11,6 +11,7 @@ import ItemUpdate from './item/ItemUpdate';
 import Logout from './account/Logout';
 import PasswordReset from './account/PasswordReset';
 import PasswordResetConfirm from './account/PasswordResetConfirm';
+import PostCreate from './posts/PostCreate';
 
 function BaseRouter () {
     return (
@@ -21,6 +22,8 @@ function BaseRouter () {
             <Route exact path="/items/:itemID" component={ItemDetail} />
             <Route exact path="/newitem" component={ItemCreate} />
             <Route exact path="/updateitem/:itemID" component={ItemUpdate} />
+            {/* Posts urls */}
+            <Route exact path="/newpost" component={PostCreate} />
             {/* User urls */}
             <Route exact path="/login" component={Login} />
             <Route exact path="/logout" component={Logout} />

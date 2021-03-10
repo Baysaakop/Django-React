@@ -149,3 +149,19 @@ export const authPasswordResetConfirm = (uid, token, new_password1, new_password
         })
     }
 }
+
+export const authFacebook = (access_token) => {
+    return dispatch => {
+        console.log(access_token)
+        // dispatch(authStart());
+        axios.post(api.authFacebook, {
+            access_token: access_token,            
+        })
+        .then(res => {            
+            console.log(res)                
+        })
+        .catch(err => {
+            console.log(err)                    
+        })
+    }
+}

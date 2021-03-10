@@ -17,7 +17,7 @@ const PasswordResetConfirm = (props) => {
     function onFinish(values) {        
         const uid = props.match.params.uid;
         const token = props.match.params.token;
-        props.onResetConfirm(uid, token, values.new_password, values.re_new_password);
+        props.onResetConfirm(uid, token, values.new_password, values.re_new_password);        
     }
 
     if (props.success) {

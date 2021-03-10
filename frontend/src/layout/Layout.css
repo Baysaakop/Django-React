@@ -84,7 +84,8 @@
     color: rgba(0, 0, 0, 0.85);
 }
 
-.layout-light .ant-breadcrumb a {
+.layout-light .ant-breadcrumb a,
+.layout-light .ant-result-subtitle {
     color: rgba(0, 0, 0, 0.45);
 }
 
@@ -98,7 +99,8 @@
     color: rgba(255, 255, 255, 0.85);
 }
 
-.layout-dark .ant-breadcrumb a {
+.layout-dark .ant-breadcrumb a,
+.layout-dark .ant-result-subtitle {
     color: rgba(255, 255, 255, 0.45);
 }
 

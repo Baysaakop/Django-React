@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Grid, Menu, Avatar, Dropdown } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
-import { BellOutlined, CloseCircleOutlined, CoffeeOutlined, DownOutlined, MailOutlined, MenuOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { BellOutlined, CloseCircleOutlined, CoffeeOutlined, DownOutlined, EditOutlined, MailOutlined, MenuOutlined, QuestionCircleOutlined, UserOutlined } from '@ant-design/icons';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/auth';
 import logo from './onplus-logo.png';
@@ -67,6 +67,9 @@ function CustomMenu (props) {
             </Item>
             <Item key="notification" style={styleMenuItem} icon={<BellOutlined style={{ fontSize: '16px' }} />}>
                 <a href="/notification">Notification</a>
+            </Item> 
+            <Item key="newpost" style={styleMenuItem} icon={<EditOutlined style={{ fontSize: '16px' }} />}>
+                <a href="/newpost">New Post</a>
             </Item>            
             <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />}>
                 <a href="/logout">Log Out</a>
@@ -110,8 +113,7 @@ function CustomMenu (props) {
                         'Content-Type': 'application/json',
                         'Authorization': `Token ${props.token}`
                     }
-                }).then(res => {
-                    console.log(res.data)
+                }).then(res => {                    
                     setUser(res.data)
                 }).catch(err => {
                     console.log(err.message)
@@ -175,6 +177,9 @@ function CustomMenu (props) {
                                 </Item>
                                 <Item key="notification" style={styleMenuItem} icon={<BellOutlined style={{ fontSize: '16px' }} />}>
                                     <a href="/notification">Notification</a>
+                                </Item>
+                                <Item key="newpost" style={styleMenuItem} icon={<EditOutlined style={{ fontSize: '16px' }} />}>
+                                    <a href="/newpost">New Post</a>
                                 </Item>            
                                 <Item key="logout" style={styleMenuItem} icon={<CloseCircleOutlined style={{ fontSize: '16px' }} />}>
                                     <a href="logout">Log Out</a>
