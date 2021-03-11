@@ -1,8 +1,8 @@
-import { Card, Carousel, Typography, List } from 'antd';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';  
-import api from '../api';
-import { Link } from 'react-router-dom';
+import { Carousel } from 'antd';
+import React from 'react';
+// import axios from 'axios';  
+// import api from '../api';
+// import { Link } from 'react-router-dom';
 
 const contentStyle = {
     height: '360px',
@@ -13,18 +13,18 @@ const contentStyle = {
 };
 
 function Home (props) {    
-    const [data, setData] = useState();
+    // const [data, setData] = useState();
 
-    useEffect(() => {
-        axios({
-            method: 'GET',
-            url: `${api.items}/`
-        }).then(res => {            
-            setData(res.data)
-        }).catch(err => {
-            console.log(err.message)
-        })        
-    }, [])   
+    // useEffect(() => {
+    //     axios({
+    //         method: 'GET',
+    //         url: `${api.items}/`
+    //     }).then(res => {            
+    //         setData(res.data)
+    //     }).catch(err => {
+    //         console.log(err.message)
+    //     })        
+    // }, [])   
 
     function onChange(a, b, c) {
         console.log(a, b, c);
@@ -46,7 +46,7 @@ function Home (props) {
                     <h3 style={contentStyle}>4</h3>
                 </div>
             </Carousel>
-            <List
+            {/* <List
                 style={{ 
                     marginTop: '24px'                    
                 }}
@@ -71,7 +71,7 @@ function Home (props) {
                         </Link>
                     </List.Item>
                 )}
-            />
+            /> */}
         </div>
     )
 }

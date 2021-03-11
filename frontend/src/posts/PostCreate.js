@@ -16,21 +16,11 @@ const PostCreate = (props) => {
         setImage(path);
     } 
 
-    function onContentChange(event, editor) {
-        console.log(editor)
-        // const data = editor.getData();
-        // console.log( { event, editor, data } );
-        // setContent(data);
-    }
-
     const handleEditorChange = (content, editor) => {
         setContent(content)
     }
 
     function onFinish (values) {
-        console.log('Title:', values.title);
-        console.log('Post:', content);
-        console.log('Image:', image);
         var formData = new FormData();
         formData.append('title', values.title);
         formData.append('content', content);        
@@ -41,15 +31,12 @@ const PostCreate = (props) => {
             url: `${api.posts}/`,
             data: formData,
             headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Token ${props.token}`            
+                'Content-Type': 'multipart/form-data'                          
             }
-        }).then(res => {
-            console.log(res.data)
-            if (res.data.status === 201 || res.data.status === 200) {
-                message.info("Posted successfully")
-            }
-            console.log(res)            
+        }).then(res => {                        
+            if (res.status === 201 || res.status === 200) {                
+                message.info("Saved successfully")
+            }             
         }).catch(err => {
             message.error(err.message)
             console.log(err)
@@ -112,24 +99,10 @@ const PostCreate = (props) => {
                                             'insertdatetime media table paste code help wordcount'
                                         ],                                        
                                         toolbar:
-                                            'undo redo | formatselect | bold italic backcolor | \
-                                            alignleft aligncenter alignright alignjustify | \
-                                            bullist numlist outdent indent | removeformat | help | image'
+                                            'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help | image'
                                     }}                                    
                                     onEditorChange={handleEditorChange}
                                 />
-                                {/* <CKEditor                                                                    
-                                    config={ {                                        
-                                        ckfinder: {
-                                            uploadUrl: api.ckeditor,
-                                            options: {
-                                                resourceType: "Images",
-                                            }
-                                        }                                        
-                                    } }
-                                    data=""                           
-                                    onChange={onContentChange}                                                                
-                                />      */}
                             </Form.Item>                                                        
                             <Form.Item>
                                 <Button type="primary" htmlType="submit">

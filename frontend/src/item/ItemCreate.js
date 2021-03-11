@@ -36,33 +36,27 @@ function ItemCreate (props) {
     const [image, setImage] = useState();    
 
     const onFinish = values => {        
-        const data = {
-            "name": values.name,
-            "description": values.description,
-            "image": image,
-            "token": props.token
-        }
+        var formData = new FormData();
+        formData.append('name', values.name);
+        formData.append('description', values.description);        
+        formData.append('image', image);
+        formData.append('token', props.token);
         axios({
             method: 'POST',
             url: `${api.items}/`,
-            data: data
-        })            
-        .then(res => {
-            console.log(res)
-            message.info(res.statusText)   
-            form.resetFields()             
-        })
-        .catch(err => {                
-            console.log(err)
+            data: formData,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Token ${props.token}`            
+            }
+        }).then(res => {                        
+            if (res.status === 201 || res.status === 200) {                
+                message.info("Saved successfully")
+            }             
+        }).catch(err => {
             message.error(err.message)
-        })            
-        // if (image) {
-        //     axios({
-        //         method: 'POST',
-        //         url: `${api.mediaItems}`,
-        //         data: formData
-        //     })
-        // }
+            console.log(err)
+        })
     };
 
     const onReset = () => {
