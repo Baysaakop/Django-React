@@ -7,8 +7,7 @@ const ImageUpload = (props) => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
 
-    useEffect(() => {        
-        console.log(props.image)
+    useEffect(() => {                
         setImageUrl(props.image)
     }, [props.image]);
 
@@ -35,7 +34,7 @@ const ImageUpload = (props) => {
     }
 
     const uploadButton = (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px', width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
             <div>
                 {loading ? <LoadingOutlined /> : <PlusOutlined />}
                 <div style={{ marginTop: 8 }}>Upload</div>
@@ -51,9 +50,9 @@ const ImageUpload = (props) => {
             className="image-uploader"
             showUploadList={false}            
             beforeUpload={() => false}
-            onChange={handleChange}                             
+            onChange={handleChange}                                      
         >
-            {imageUrl ? <img src={imageUrl} alt="upload" style={{ width: '80%', height: 'auto' }} /> : uploadButton}
+            {imageUrl ? <img src={imageUrl} alt="upload" style={{ width: '80%', height: 'auto', objectFit: 'fill' }} /> : uploadButton}
         </Upload>
     );
 };

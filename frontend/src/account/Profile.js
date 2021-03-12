@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import api from '../api';
+import AccountDetail from './AccountDetail';
 
 function Profile (props) {
 
@@ -16,11 +17,11 @@ function Profile (props) {
                 'Content-Type': 'application/json',
                 'Authorization': `Token ${props.token}`
             }
-        }).then(response => {
-            console.log(response.data)
-            setUser(response.data)
-        }).catch(error => {
-            console.log(error)
+        }).then(res => {
+            console.log(res.data)
+            setUser(res.data)
+        }).catch(err => {
+            console.log(err)
         })
     }, [props.token])
 
@@ -38,7 +39,9 @@ function Profile (props) {
             {user ? (
                 <Tabs tabPosition="left" style={{ minHeight: '80vh' }}>
                     <Tabs.TabPane tab="Account details" key="1">
-                        <div style={{ padding: '8px' }}>Account details</div>
+                        <div style={{ padding: '8px' }}>
+                            <AccountDetail user={user ? user : undefined} />
+                        </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="User activity" key="2">
                         <div style={{ padding: '8px' }}>User activity</div>                        

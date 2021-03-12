@@ -227,7 +227,11 @@ function CustomMenu (props) {
                         { user && user !== null ? (
                             <div style={styleLogo}>
                                 <div>
-                                    <Avatar icon={<UserOutlined />} />
+                                    { user.profile.avatar ? 
+                                        <Avatar src={user.profile.avatar} />
+                                    :
+                                        <Avatar icon={<UserOutlined />} />
+                                    }                                    
                                 </div>
                                 <div style={{ color: '#000', fontSize: '18px', marginLeft: '8px' }}>           
                                     <Dropdown overlay={accountMenu} placement="bottomRight" trigger={['click']}>

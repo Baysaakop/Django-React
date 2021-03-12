@@ -59,7 +59,10 @@
 .layout-light .ant-input,
 .layout-light .ant-pagination-item,
 .layout-light .ant-pagination-item a,
-.layout-light .ant-pagination-item-link {
+.layout-light .ant-pagination-item-link,
+.layout-light .ant-picker,
+.layout-light .ant-picker-input,
+.layout-light .ant-picker-input > input {
     background-color: #fff;
     color: rgba(0, 0, 0, 0.85);    
 }
@@ -69,7 +72,10 @@
 .layout-dark .ant-input,
 .layout-dark .ant-pagination-item,
 .layout-dark .ant-pagination-item a,
-.layout-dark .ant-pagination-item-link {
+.layout-dark .ant-pagination-item-link,
+.layout-dark .ant-picker,
+.layout-dark .ant-picker-input,
+.layout-dark .ant-picker-input > input {
     background-color: #0d1117;
     color: rgba(255, 255, 255, 0.85);    
 }
@@ -80,7 +86,8 @@
 .layout-light .ant-result-title,
 .layout-light .ant-tabs,
 .layout-light .ant-breadcrumb-link,
-.layout-light .ant-breadcrumb-separator {    
+.layout-light .ant-breadcrumb-separator,
+.layout-light .ant-picker-dropdown {    
     color: rgba(0, 0, 0, 0.85);
 }
 
@@ -95,7 +102,8 @@
 .layout-dark .ant-result-title,
 .layout-dark .ant-tabs,
 .layout-dark .ant-breadcrumb-link,
-.layout-dark .ant-breadcrumb-separator {    
+.layout-dark .ant-breadcrumb-separator,
+.layout-dark .ant-picker-dropdown {    
     color: rgba(255, 255, 255, 0.85);
 }
 
