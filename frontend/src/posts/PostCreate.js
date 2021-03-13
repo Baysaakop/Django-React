@@ -79,8 +79,10 @@ const PostCreate = (props) => {
                             <Form.Item
                                 name="image"
                                 label="Thumbnail"                                
-                            >                               
-                                <ImageUpload onImageSelected={onImageSelected} imageUrl={undefined} style={{ width: '100%' }} />                        
+                            >                       
+                                <div style={{ width: '100%', height: '200px' }}>
+                                    <ImageUpload onImageSelected={onImageSelected} imageUrl={undefined} />                        
+                                </div>
                             </Form.Item>                     
                             <Form.Item
                                 label="Content"

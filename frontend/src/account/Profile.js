@@ -1,12 +1,14 @@
-import { Breadcrumb, Button, Result, Tabs } from 'antd';
+import { Grid, Breadcrumb, Button, Result, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import api from '../api';
 import AccountDetail from './AccountDetail';
 
-function Profile (props) {
+const { useBreakpoint } = Grid;
 
+function Profile (props) {
+    const screens = useBreakpoint();
     const [user, setUser] = useState();
 
     useEffect(() => {        
@@ -17,8 +19,7 @@ function Profile (props) {
                 'Content-Type': 'application/json',
                 'Authorization': `Token ${props.token}`
             }
-        }).then(res => {
-            console.log(res.data)
+        }).then(res => {            
             setUser(res.data)
         }).catch(err => {
             console.log(err)
@@ -37,10 +38,10 @@ function Profile (props) {
             </Breadcrumb>
             <div className="container" style={{ margin: '16px 0' }}>
             {user ? (
-                <Tabs tabPosition="left" style={{ minHeight: '80vh' }}>
+                <Tabs tabPosition={screens.xs ? "top" : "left"} style={{ minHeight: '80vh', padding: '8px' }}>
                     <Tabs.TabPane tab="Account details" key="1">
                         <div style={{ padding: '8px' }}>
-                            <AccountDetail user={user ? user : undefined} />
+                            <AccountDetail user={user ? user : undefined} token={props.token} />
                         </div>
                     </Tabs.TabPane>
                     <Tabs.TabPane tab="User activity" key="2">

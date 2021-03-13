@@ -34,7 +34,7 @@ const ImageUpload = (props) => {
     }
 
     const uploadButton = (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: 'auto' }}>
             <div>
                 {loading ? <LoadingOutlined /> : <PlusOutlined />}
                 <div style={{ marginTop: 8 }}>Upload</div>
@@ -52,7 +52,7 @@ const ImageUpload = (props) => {
             beforeUpload={() => false}
             onChange={handleChange}                                      
         >
-            {imageUrl ? <img src={imageUrl} alt="upload" style={{ width: '80%', height: 'auto', objectFit: 'fill' }} /> : uploadButton}
+            {imageUrl ? <img src={imageUrl} alt="upload" style={{ width: 'auto', height: '100%', objectFit: 'scale-down' }} /> : uploadButton}
         </Upload>
     );
 };

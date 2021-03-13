@@ -1,5 +1,7 @@
 from .models import Profile
 from django.contrib.auth.models import User
+from rest_framework import status
+from rest_framework.response import Response
 from .serializers import UserSerializer
 from rest_framework import viewsets
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
@@ -9,20 +11,21 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-    def update(self, request, *args, **kwargs):                         
-        user = self.get_object()              
-        if 'username' in request.data:
+    def update(self, request, *args, **kwargs):           
+        print(request.data)
+        user = self.get_object()                      
+        if 'username' in request.data and user.username != request.data['username']:            
             user.username=request.data['username']                                     
-        if 'first_name' in request.data:
+        if 'first_name' in request.data and user.first_name != request.data['first_name']:
             user.first_name=request.data['first_name'] 
-        if 'last_name' in request.data:
+        if 'last_name' in request.data and user.last_name != request.data['last_name']:
             user.last_name=request.data['last_name']   
-        if 'phone_number' in request.data:
+        if 'phone_number' in request.data and user.profile.phone_number != request.data['phone_number']:
             user.profile.phone_number=request.data['phone_number']    
-        if 'avatar' in request.data:
-            user.profile.avatar=request.data['avatar']    
-        if 'birth_date' in request.data:
-            user.profile.birth_date=request.data['birth_date']        
+        if 'birth_date' in request.data and user.profile.birth_date != request.data['birth_date']:
+            user.profile.birth_date=request.data['birth_date']    
+        if 'avatar' in request.data and user:
+            user.profile.avatar=request.data['avatar']                
         user.save()
         serializer = UserSerializer(user)
         headers = self.get_success_headers(serializer.data)        
